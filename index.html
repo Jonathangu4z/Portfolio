@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Portfolio — [Your Name]</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:        #070b14;
+    --bg-2:      #0d1220;
+    --bg-3:      #131929;
+    --border:    #1e2a3d;
+    --border-hi: #2a3d5a;
+    --accent:    #00c8ff;
+    --accent-2:  #8b5cf6;
+    --accent-3:  #34d399;
+    --text:      #e2e8f0;
+    --muted:     #64748b;
+    --muted-hi:  #94a3b8;
+    --card-bg:   #0d1525;
+    --font-head: 'Syne', sans-serif;
+    --font-body: 'Outfit', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE + GRID BACKGROUND ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 60px 60px;
+    opacity: 0.3;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.1rem 5vw;
+    background: rgba(7,11,20,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.875rem;
+    color: var(--muted-hi);
+    text-decoration: none;
+    letter-spacing: 0.03em;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  /* ── SECTIONS ── */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 6rem 5vw;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 6rem;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    width: 28px; height: 1px;
+    background: var(--accent);
+  }
+
+  h1.hero-name {
+    font-family: var(--font-head);
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.25rem;
+    background: linear-gradient(135deg, #e2e8f0 30%, #00c8ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    color: var(--muted-hi);
+    max-width: 600px;
+    margin-bottom: 2.5rem;
+    font-weight: 400;
+    line-height: 1.75;
+  }
+
+  .hero-sub span {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.75rem;
+    border-radius: 6px;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #07111f;
+    border: none;
+    box-shadow: 0 0 24px rgba(0,200,255,0.25);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 36px rgba(0,200,255,0.45);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border-hi);
+  }
+
+  .btn-outline:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 3rem;
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+
+  .stat-item {}
+  .stat-num {
+    font-family: var(--font-head);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1;
+  }
+  .stat-num span { color: var(--accent); }
+  .stat-label {
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 0.3rem;
+  }
+
+  /* ── SECTION HEADER ── */
+  .section-header {
+    margin-bottom: 3.5rem;
+  }
+
+  .section-tag {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  h2.section-title {
+    font-family: var(--font-head);
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: var(--text);
+  }
+
+  .section-title em {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  .section-desc {
+    margin-top: 1rem;
+    color: var(--muted-hi);
+    max-width: 560px;
+    font-size: 1rem;
+  }
+
+  /* ── ABOUT ── */
+  #about .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .about-text p {
+    color: var(--muted-hi);
+    line-height: 1.85;
+    margin-bottom: 1rem;
+  }
+
+  .about-text p strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .about-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .detail-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    transition: border-color 0.2s;
+  }
+
+  .detail-card:hover { border-color: var(--border-hi); }
+
+  .detail-card .dc-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.3rem;
+  }
+
+  .detail-card .dc-value {
+    font-weight: 500;
+    color: var(--text);
+    font-size: 0.95rem;
+  }
+
+  .detail-card .dc-badge {
+    display: inline-block;
+    margin-top: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    padding: 2px 10px;
+    border-radius: 20px;
+    background: rgba(0,200,255,0.1);
+    color: var(--accent);
+    border: 1px solid rgba(0,200,255,0.25);
+  }
+
+  /* ── SKILLS ── */
+  #skills .skills-categories {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .skill-category h3 {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .skill-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.45rem 1rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border: 1px solid var(--border);
+    background: var(--card-bg);
+    color: var(--muted-hi);
+    transition: border-color 0.2s, color 0.2s, transform 0.2s;
+    cursor: default;
+  }
+
+  .skill-tag:hover {
+    border-color: var(--accent);
+    color: var(--text);
+    transform: translateY(-2px);
+  }
+
+  .skill-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .skill-dot.purple { background: var(--accent-2); }
+  .skill-dot.green  { background: var(--accent-3); }
+
+  /* ── PROJECTS ── */
+  #projects .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(460px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: border-color 0.25s, transform 0.25s;
+    text-decoration: none;
+    cursor: default;
+  }
+
+  .project-card:hover {
+    border-color: var(--border-hi);
+    transform: translateY(-4px);
+  }
+
+  .project-card.featured {
+    border-color: rgba(0,200,255,0.3);
+    background: linear-gradient(135deg, #0d1525 0%, #0a1628 100%);
+  }
+
+  .project-card.featured:hover {
+    border-color: rgba(0,200,255,0.6);
+  }
+
+  .project-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .project-icon {
+    width: 42px; height: 42px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .icon-cyan   { background: rgba(0,200,255,0.12); }
+  .icon-purple { background: rgba(139,92,246,0.12); }
+  .icon-green  { background: rgba(52,211,153,0.12); }
+  .icon-amber  { background: rgba(251,191,36,0.12); }
+
+  .project-links {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .proj-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: 5px;
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    font-weight: 500;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    color: var(--muted-hi);
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .proj-link:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .project-name {
+    font-family: var(--font-head);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.25rem;
+  }
+
+  .project-type {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .project-desc {
+    font-size: 0.9rem;
+    color: var(--muted-hi);
+    line-height: 1.7;
+  }
+
+  .project-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: auto;
+  }
+
+  .tech-pill {
+    padding: 0.25rem 0.65rem;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    background: rgba(255,255,255,0.05);
+    color: var(--muted-hi);
+    border: 1px solid var(--border);
+  }
+
+  /* ── CONTACT ── */
+  #contact {
+    text-align: center;
+    padding-bottom: 8rem;
+  }
+
+  .contact-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 3.5rem 2rem;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .contact-email {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 1.1rem;
+    color: var(--accent);
+    text-decoration: none;
+    margin: 1.5rem 0;
+    padding: 0.75rem 1.5rem;
+    border: 1px solid rgba(0,200,255,0.3);
+    border-radius: 8px;
+    transition: background 0.2s;
+  }
+
+  .contact-email:hover {
+    background: rgba(0,200,255,0.08);
+  }
+
+  .social-links {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+  }
+
+  .social-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 1.25rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    color: var(--muted-hi);
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .social-btn:hover {
+    border-color: var(--border-hi);
+    color: var(--text);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 2rem;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.8rem;
+    font-family: var(--font-mono);
+  }
+
+  /* ── SCROLL ANIMATIONS ── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    #about .about-grid {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+    #projects .projects-grid {
+      grid-template-columns: 1fr;
+    }
+    .nav-links { display: none; }
+    .hero-stats { gap: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a class="nav-logo" href="#">// portfolio</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-eyebrow">Available for internships &amp; opportunities</div>
+  <h1 class="hero-name">Your Name Here.</h1>
+  <p class="hero-sub">
+    <span>Computer Information Systems</span> student at Arizona State University
+    with a certificate in Applied Business Data Analytics — turning raw data into
+    decisions through dashboards, analysis, and real-world applications.
+  </p>
+  <div class="hero-cta">
+    <a href="#projects" class="btn btn-primary">View My Projects</a>
+    <a href="#contact" class="btn btn-outline">Get in Touch</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num">4<span>+</span></div>
+      <div class="stat-label">Projects Built</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">3<span>+</span></div>
+      <div class="stat-label">Years at ASU</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">2<span></span></div>
+      <div class="stat-label">Credentials</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">10<span>+</span></div>
+      <div class="stat-label">Tools & Technologies</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ABOUT ── -->
+<section id="about">
+  <div class="section-header fade-up">
+    <span class="section-tag">01 — About</span>
+    <h2 class="section-title">Who I <em>Am</em></h2>
+  </div>
+  <div class="about-grid fade-up">
+    <div class="about-text">
+      <p>
+        I'm a <strong>Computer Information Systems student at Arizona State University</strong>,
+        complementing my degree with a certificate in <strong>Applied Business Data Analytics</strong>.
+        My work sits at the intersection of technology and business — I build the kind of
+        data tools that actually change how people make decisions.
+      </p>
+      <p>
+        From interactive dashboards and Python-driven analysis pipelines to full web
+        applications, I focus on things that are hard to summarize on a résumé:
+        <strong>working software, real datasets, tangible outcomes.</strong>
+      </p>
+      <p>
+        I'm seeking roles in <strong>data analytics, business intelligence, or full-stack
+        development</strong> where I can contribute immediately and keep growing fast.
+      </p>
+      <a href="#contact" class="btn btn-outline" style="margin-top:1.25rem; display:inline-flex;">Let's Connect →</a>
+    </div>
+    <div class="about-details">
+      <div class="detail-card">
+        <div class="dc-label">University</div>
+        <div class="dc-value">Arizona State University</div>
+        <div class="dc-badge">Tempe, AZ</div>
+      </div>
+      <div class="detail-card">
+        <div class="dc-label">Degree</div>
+        <div class="dc-value">B.S. Computer Information Systems</div>
+        <div class="dc-badge">Expected May 20XX</div>
+      </div>
+      <div class="detail-card">
+        <div class="dc-label">Certificate</div>
+        <div class="dc-value">Applied Business Data Analytics</div>
+        <div class="dc-badge">ASU W. P. Carey School</div>
+      </div>
+      <div class="detail-card">
+        <div class="dc-label">Focus Areas</div>
+        <div class="dc-value">Data Visualization · BI Dashboards · Analytics Apps</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SKILLS ── -->
+<section id="skills">
+  <div class="section-header fade-up">
+    <span class="section-tag">02 — Skills</span>
+    <h2 class="section-title">Tools &amp; <em>Technologies</em></h2>
+    <p class="section-desc">The stack I use to go from raw data to working product.</p>
+  </div>
+
+  <div class="skills-categories fade-up">
+    <div class="skill-category">
+      <h3>Languages</h3>
+      <div class="skill-tags">
+        <span class="skill-tag"><span class="skill-dot"></span>Python</span>
+        <span class="skill-tag"><span class="skill-dot"></span>SQL</span>
+        <span class="skill-tag"><span class="skill-dot"></span>JavaScript</span>
+        <span class="skill-tag"><span class="skill-dot"></span>HTML / CSS</span>
+        <span class="skill-tag"><span class="skill-dot"></span>R (basic)</span>
+        <span class="skill-tag"><span class="skill-dot"></span>Bash / CLI</span>
+      </div>
+    </div>
+    <div class="skill-category">
+      <h3>Analytics & Visualization</h3>
+      <div class="skill-tags">
+        <span class="skill-tag"><span class="skill-dot purple"></span>Tableau</span>
+        <span class="skill-tag"><span class="skill-dot purple"></span>Power BI</span>
+        <span class="skill-tag"><span class="skill-dot purple"></span>Pandas</span>
+        <span class="skill-tag"><span class="skill-dot purple"></span>NumPy</span>
+        <span class="skill-tag"><span class="skill-dot purple"></span>Matplotlib / Seaborn</span>
+        <span class="skill-tag"><span class="skill-dot purple"></span>Excel (Advanced)</span>
+        <span class="skill-tag"><span class="skill-dot purple"></span>Google Looker Studio</span>
+      </div>
+    </div>
+    <div class="skill-category">
+      <h3>Databases & Platforms</h3>
+      <div class="skill-tags">
+        <span class="skill-tag"><span class="skill-dot green"></span>MySQL</span>
+        <span class="skill-tag"><span class="skill-dot green"></span>PostgreSQL</span>
+        <span class="skill-tag"><span class="skill-dot green"></span>Google BigQuery</span>
+        <span class="skill-tag"><span class="skill-dot green"></span>Git / GitHub</span>
+        <span class="skill-tag"><span class="skill-dot green"></span>Jupyter Notebook</span>
+        <span class="skill-tag"><span class="skill-dot green"></span>Flask</span>
+        <span class="skill-tag"><span class="skill-dot green"></span>VS Code</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROJECTS ── -->
+<section id="projects">
+  <div class="section-header fade-up">
+    <span class="section-tag">03 — Work</span>
+    <h2 class="section-title">Featured <em>Projects</em></h2>
+    <p class="section-desc">
+      Real datasets, real applications — the things a résumé can't show.
+    </p>
+  </div>
+
+  <div class="projects-grid">
+
+    <!-- PROJECT 1 -->
+    <div class="project-card featured fade-up">
+      <div class="project-header">
+        <div class="project-icon icon-cyan">📊</div>
+        <div class="project-links">
+          <a href="#" class="proj-link">↗ Live Demo</a>
+          <a href="#" class="proj-link">⌥ GitHub</a>
+        </div>
+      </div>
+      <div>
+        <div class="project-type">Dashboard · Tableau</div>
+        <div class="project-name">Sales Performance Dashboard</div>
+      </div>
+      <p class="project-desc">
+        End-to-end Tableau dashboard tracking KPIs across regions, products, and time periods.
+        Includes drill-down filters, trend forecasting, and executive-ready summary view.
+        Built on a 50k+ row retail dataset cleaned with Python.
+      </p>
+      <div class="project-tech">
+        <span class="tech-pill">Tableau</span>
+        <span class="tech-pill">Python</span>
+        <span class="tech-pill">Pandas</span>
+        <span class="tech-pill">Excel</span>
+      </div>
+    </div>
+
+    <!-- PROJECT 2 -->
+    <div class="project-card fade-up">
+      <div class="project-header">
+        <div class="project-icon icon-purple">🔍</div>
+        <div class="project-links">
+          <a href="#" class="proj-link">↗ Notebook</a>
+          <a href="#" class="proj-link">⌥ GitHub</a>
+        </div>
+      </div>
+      <div>
+        <div class="project-type">Predictive Analysis · Python</div>
+        <div class="project-name">Customer Churn Prediction</div>
+      </div>
+      <p class="project-desc">
+        ML classification model predicting customer churn for a telecom dataset.
+        Achieved 87% accuracy using a Random Forest classifier. Includes full EDA,
+        feature engineering, and an interactive confusion matrix visualization.
+      </p>
+      <div class="project-tech">
+        <span class="tech-pill">Python</span>
+        <span class="tech-pill">scikit-learn</span>
+        <span class="tech-pill">Seaborn</span>
+        <span class="tech-pill">Jupyter</span>
+      </div>
+    </div>
+
+    <!-- PROJECT 3 -->
+    <div class="project-card fade-up">
+      <div class="project-header">
+        <div class="project-icon icon-green">🌐</div>
+        <div class="project-links">
+          <a href="#" class="proj-link">↗ Live App</a>
+          <a href="#" class="proj-link">⌥ GitHub</a>
+        </div>
+      </div>
+      <div>
+        <div class="project-type">Web Application · Flask + SQL</div>
+        <div class="project-name">Inventory Analytics Portal</div>
+      </div>
+      <p class="project-desc">
+        Full-stack web app for inventory tracking and reporting. Features role-based
+        login, auto-generated restock alerts, and embedded Chart.js visualizations
+        pulling live from a MySQL database. Deployed on a cloud VM.
+      </p>
+      <div class="project-tech">
+        <span class="tech-pill">Flask</span>
+        <span class="tech-pill">MySQL</span>
+        <span class="tech-pill">Chart.js</span>
+        <span class="tech-pill">HTML/CSS</span>
+        <span class="tech-pill">Python</span>
+      </div>
+    </div>
+
+    <!-- PROJECT 4 -->
+    <div class="project-card fade-up">
+      <div class="project-header">
+        <div class="project-icon icon-amber">💼</div>
+        <div class="project-links">
+          <a href="#" class="proj-link">↗ Report</a>
+          <a href="#" class="proj-link">⌥ GitHub</a>
+        </div>
+      </div>
+      <div>
+        <div class="project-type">Business Intelligence · Power BI</div>
+        <div class="project-name">Financial KPI Report Suite</div>
+      </div>
+      <p class="project-desc">
+        Multi-page Power BI report built from scratch for a simulated mid-size business.
+        Covers revenue vs. forecast, cost breakdown by department, and YoY growth.
+        DAX measures written for all calculated fields.
+      </p>
+      <div class="project-tech">
+        <span class="tech-pill">Power BI</span>
+        <span class="tech-pill">DAX</span>
+        <span class="tech-pill">SQL</span>
+        <span class="tech-pill">Excel</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section id="contact">
+  <div class="section-header fade-up" style="text-align:center; align-items:center; display:flex; flex-direction:column;">
+    <span class="section-tag">04 — Contact</span>
+    <h2 class="section-title">Let's <em>Connect</em></h2>
+  </div>
+  <div class="contact-card fade-up">
+    <p style="color:var(--muted-hi); font-size:0.95rem;">
+      Open to internships, co-ops, freelance analytics work, and new grad roles.
+      Reach out and I'll get back to you quickly.
+    </p>
+    <br/>
+    <a href="mailto:youremail@asu.edu" class="contact-email">youremail@asu.edu</a>
+    <div class="social-links">
+      <a href="https://linkedin.com/in/yourprofile" class="social-btn" target="_blank">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+        LinkedIn
+      </a>
+      <a href="https://github.com/yourusername" class="social-btn" target="_blank">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
+        GitHub
+      </a>
+      <a href="your-resume.pdf" class="social-btn" target="_blank">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        Résumé PDF
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <span>// built by [Your Name] · ASU CIS + Applied Business Data Analytics</span>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
